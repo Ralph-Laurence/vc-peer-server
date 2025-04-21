@@ -11,10 +11,12 @@ app.use((req, res, next) => {
     next();
 });
 
-const server = require('https').Server(app);
+const server = require('http').Server(app);
 const peerServer = ExpressPeerServer(server, {
     path: '/peervc'
 });
 
 app.use('/peervc', peerServer);
-server.listen(process.env.PORT, 'https://videocall-peer-server.glitch.me');
+server.listen(process.env.PORT || 9000, () => {
+    console.log(`Server is running on port ${process.env.PORT || 8080}`);
+});
